@@ -1,0 +1,19 @@
+.nav-text {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.navbar-brand {
+    font-size: 30px !important;
+    font-weight: 600;
+    padding-left: 2%;
+}
+
+.nav-icon {
+    width: 225px;
+    height: 80px;
+}
+
+.nav-container {
+    padding: 2%;
+}

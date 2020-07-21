@@ -1,0 +1,92 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-weight: 500 !important;
+    font-size: 70px;
+    font-weight: 600 !important;
+}
+
+.home-jumbotron {
+    background-color: #94d0ff !important;
+}
+
+.blog-jumbotron {
+    background-color: #bdb2ff !important;
+}
+
+.lead {
+    font-size: 30px !important;
+    padding-left: 15%;
+    padding-right: 15%;
+    text-align: center;
+}
+ 
+.icon {
+    font-size: 50px;
+}
+
+.icon-button {
+    padding: 0px !important;
+    padding-right: 7px !important;
+}
+
+.projects-title {
+    padding-top: 3%;
+    padding-bottom: 0.1%;
+    text-align: center;
+    font-size: 50px !important;
+    font-weight: 600 !important;
+}
+
+.square-button {
+    width: 45px;
+    height: 45px;
+    padding: 0% !important;
+}
+
+.square-icon {
+    font-size: 35px;
+}
+
+.projects-subtitle {
+    padding-bottom: 0.1%;
+    padding-top: 0.5%;
+}
+
+hr {
+    padding-bottom: 1%;
+}
+
+.rounded-image {
+    border-radius: 10px;
+    width: 90%;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.card-columns {
+    column-count: 2 !important; 
+}
+
+.card-title {
+    font-weight: 600 !important;
+    font-size: 25px;
+}
+
+.card-text {
+    font-size: 19px;
+}
+
+.blog-title {
+    font-size: 50px !important;
+    font-weight: 600 !important;
+    text-align: center;
+    padding: 1%;
+}
+

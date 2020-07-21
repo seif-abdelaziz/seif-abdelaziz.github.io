@@ -1,0 +1,40 @@
+.blogs {
+    padding: 2%;
+}
+
+.blog {
+    border: none !important;
+}
+
+.card-img-top {
+    height: 400px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 27.5px !important;
+    font-weight: 600;
+    text-decoration: none !important;
+    color: rgb(20, 20, 20) !important;
+}
+
+.card-text {
+    font-size: 17.5px !important;
+    text-decoration: none !important;
+    color: rgb(20, 20, 20) !important;
+}
+
+.blog-jumbotron {
+    background-color: #bdb2ff !important;
+}
+
+h1 {
+    font-weight: 500 !important;
+    font-size: 70px;
+    font-weight: 600 !important;
+}
+
+a:hover {
+    text-decoration: none !important;
+    color: rgb(20, 20, 20) !important;
+}
