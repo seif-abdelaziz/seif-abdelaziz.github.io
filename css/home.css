@@ -55,6 +55,8 @@ h1 {
 .projects-subtitle {
     padding-bottom: 0.1%;
     padding-top: 0.5%;
+    color: #888888 !important;
+    font-weight: 300 !important;
 }
 
 hr {
