@@ -1,9 +1,15 @@
 h1 {
-    text-align: center;
+    text-align: left;
     padding-top: 5%;
     font-weight: 600 !important;
     text-decoration: none !important;
     color: rgb(20, 20, 20) !important;
+}
+
+h3 {
+    font-weight: 510 !important;
+    font-size: 27px !important;
+    padding: 1.5%;
 }
 
 .hr2 {
@@ -19,7 +25,7 @@ h1 {
 }
 
 p {
-    font-size: 22px;
+    font-size: 18px;
 }
 
 h5 {
@@ -30,3 +36,14 @@ h5 {
 .square-button {
     font-size: 50px !important;
 }
+
+img {
+    padding: 2%;
+    text-align: center;
+}
+
+.image-figure {
+    display: flex !important;
+    justify-content: center !important;
+}
+
