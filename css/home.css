@@ -25,7 +25,7 @@ h1 {
     text-align: center;
 }
  
-.icon {
+.title-icon {
     font-size: 50px;
 }
 
@@ -48,8 +48,8 @@ h1 {
     padding: 0% !important;
 }
 
-.square-icon {
-    font-size: 35px;
+.icon {
+    font-size: 40px;
 }
 
 .projects-subtitle {
@@ -92,3 +92,16 @@ a:hover {
     padding: 1%;
 }
 
+.btn{
+    border-radius: 4px;
+    padding: 14px 80px 18px 36px;
+    cursor: pointer;
+}
+
+.btn:hover{
+    transform: scale(1.05);
+}
+
+.btn:active{
+    transform: scale(1.02);
+}
