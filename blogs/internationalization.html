@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/blog-article.css">
+    <script src="https://kit.fontawesome.com/299e4b8f4c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Seif Abdelaziz</title>
+    <link rel="shortcut icon" href="./assets/images/tetracyl.png" />
+    <meta name="title" content="Seif Abdelaziz">
+    <meta name="description"
+        content="I'm a 16 year developer with a strong passion for coding. I am currently interested in programming, space, and history.">
+    <meta name="keywords" content="personal website, portfolio">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="author" content="Seif Abdelaziz">
+    <meta name="theme-color" content="#94D0FF">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://seifabdelaziz.me/">
+    <meta property="og:title" content="Seif Abdelaziz">
+    <meta property="og:site_name" content="Seif Abdelaziz">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="500">
+    <meta property="og:image:height" content="500">
+    <meta property="og:description" content="I'm a 16 year developer with a strong passion for coding. I am currently interested in
+        programming, space, and history.">
+</head>
+
+<body>
+    <nav class="navbar static-top navbar-expand-lg navbar-light">
+        <div class="container">
+            <nav class="navbar navbar-light">
+                <a class="navbar-brand" href="../index.html">
+                    <img src="../assets/images/tetracyl.png" width="70" height="70" alt="">
+                </a>
+            </nav>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link nav-text" href="../index.html">home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link nav-text" href="../blog.html">blog<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-bottom: 4%;">
+        <div class="blog-container">
+            <h1>Flutter Internationalization With Crowdin: Part 1</h1>
+            <hr>
+            <h5>February 21st, 2021 · 15 minute read </h5>
+            <hr>
+
+            <p>I am mainly making this guide to help other Flutter developers who are interested in setting up
+                localization via Crowdin, since I could not find any guides myself. In this guide I will be going over
+                why internationalization is necessary and how to set up and use easy_localization. In part 2 I will go
+                over how to set up Crowdin which is a localizaiton management tool that makes it easier to manage your
+                app's translations and allows for other translators to collaborate on your project.</p>
+
+            <h3>Why setup internationalization?</h3>
+
+            <p>When it comes to mobile apps, users expect your app to support their language right out the box.
+                Although English is considered as the universal language of the world, many people barely know any
+                English and therefore need translations in their own language. Implementing internationalization can
+                make your app available to a wider audience, and can make your users feel more comfortable while using
+                your app.</p>
+
+            <h3>Project Setup</h3>
+
+            <p>To get started, we first need to install the <a
+                    href="https://pub.dev/packages/easy_localization">easy_localization</a> package. Add the following
+                to your <kbd>pubspec.yaml</kbd> file:
+            <pre>dependencies:
+  flutter_localizations:
+    sdk: flutter
+  easy_localization: ^2.3.3+1</pre>
+            Once you have installed the easy_localization package, create a folder called i18n in your flutter project.
+            Then add your translation files into the i18n folder. Here is an example of what your directory might look
+            like</p>
+
+            <pre>i18n
+  └── {languageCode}-{countryCode}.{ext} // Translation files</pre>
+
+            <p>After creating the i18n folder, add the i18n directory to your <kbd>pubspec.yaml</kbd>:</p>
+
+            <pre>flutter
+  assets:
+    - i18n/</pre>
+
+            <p>If you are planning on publishing this app to iOS, you must add the supported locales lines to your
+                <kbd>Info.plist</kbd> file which should be located in <kbd>ios/Runner/Info.plist</kbd>
+            </p>
+
+            <p>Example:</p>
+
+            <pre>
+&lt;key&gt;CFBundleLocalizations&lt;/key&gt;
+&lt;array&gt;
+    &lt;string&gt;en&lt;/string&gt;
+    &lt;string&gt;es&lt;/string&gt;
+&lt;/array&gt;</pre>
+
+            <h3>Adding easy_localization widget</h3>
+
+            <p>Add the following import to your dart file: </p>
+            <pre>import 'package:easy_localization/easy_localization.dart';</pre>
+
+            <p>Go to your MaterialApp Widget and wrap it around with the EasyLocalization widget like so:</p>
+
+            <pre>
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+void main() {
+    runApp(
+        EasyLocalization(
+            supportedLocales: [Locale('en', 'US'), Locale('es', 'ES')],
+            path: 'i18n',
+            fallbackLocale: Locale('en', 'US'),
+            child: MyApp()
+        ),
+    );
+}
+
+class MyApp extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+    return MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        home: MyHomePage()
+    );
+    }
+} 
+            </pre>
+
+            <p>You can add certain properties to customize your widget such as the startLocale, the fallbackLocale, and
+                the savedLocale. More info can be found here: <a
+                    href="https://pub.dev/packages/easy_localization">https://pub.dev/packages/easy_localization</a></p>
+
+            <p>By default, this package only supports JSON files so if you're interested in loading translations from
+                CSV, Yaml, HTTP, FILE or XML files, continue to the next section and if not then skip to the section
+                after.</p>
+
+            <h3>Loading translations from other file types</h3>
+
+            <p>In order for us to read translations from different file types, we can use the <a
+                    href="https://pub.dev/packages/easy_localization_loader">easy_localization_loader</a> package.</p>
+
+            <p>To install it, add the package to your <kbd>pubspec.yaml</kbd> file: </p>
+
+            <pre>dependencies:
+  easy_localization_loader: ^0.0.2</pre>
+
+            <p>Then add the import statement to your dart code: </p>
+            <pre>import 'package:easy_localization_loader/easy_localization_loader.dart';</pre>
+
+            <p>Once you've installed the package, we can easily start using it by adding the <kbd>assetLoader</kbd>
+                property to our EasyLocalization widget. If you're using CSV files, then set the assetLoader
+                property to <kbd>CsvAssetLoader()</kbd>, if you're using Yaml files, set the assetLoader property to
+                <kbd>YamlAssetLoader()</kbd>. The same goes for other file types as well, here as an example showing the
+                available loaders that come with the package.
+            </p>
+
+
+
+            <pre>
+void main() {
+    runApp(
+        EasyLocalization(
+            supportedLocales: [Locale('en', 'US'), Locale('es', 'ES')],
+            path: 'i18n',
+            fallbackLocale: Locale('en', 'US'),
+            child: MyApp()
+            // assetLoader: RootBundleAssetLoader() // This is the default loader used by Flutter
+            // assetLoader: HttpAssetLoader()
+            // assetLoader: FileAssetLoader()
+            // assetLoader: CsvAssetLoader()
+            // assetLoader: YamlAssetLoader() // Multiple files
+            // assetLoader: YamlSingleAssetLoader() // Single file
+            // assetLoader: XmlAssetLoader() // Multiple files
+            // assetLoader: XmlSingleAssetLoader() // Single file
+            // assetLoader: CodegenLoader()
+        ),
+    );
+}  
+            </pre>
+
+            <h3>Using the package to translate text</h3>
+
+            <p>Now that we've set up the package to work with our project, we can use the <kbd>tr()</kbd> function to
+                translate our text. The example below shows the usage of the <kbd>tr()</kbd> function. The string
+                'title' should be replace with your language keys from the translation files.</p>
+
+            <pre>
+Text('title').tr() // Text widget
+
+print('title'.tr()); // String
+
+var title = tr('title') // Static function</pre>
+
+            <p>Here is a more detailed example using arguments in our translated text:</p>
+
+            <p>en-US.json file:</p>
+            <pre>
+{
+    "welcome.title": "Welcome",
+    "welcome.subtitle": "Hello {}, how are you?"      
+}
+            </pre>
+
+            <p>Dart Code</p>
+            <pre>
+Text('welcome.title').tr(), // Without args
+
+Text('welcome.subtitle').tr(args: ['John']); // With args. This would return: "Hello John, how are you?"</pre>
+
+            <p>This package also supports namedArgs, pluralization and linked translations. Visit the <a
+                    href="https://pub.dev/packages/easy_localization#-translate-tr">document</a> for more info abotu
+                these topics.</p>
+
+            <h3>Getting and settings our locale</h3>
+
+            <p>Getting locales is quite easy. We can use the widget's BuildContent to get information about our locale:
+            </p>
+
+            <pre>
+print(context.locale) // Current locale; output: en_US
+
+print(context.supportedLocales); // List of supported locales; output: [en_US, ar_DZ, de_DE, ru_RU]
+
+print(context.fallbackLocale); // Fallbak locale; output: en_US</pre>
+
+            <p>Setting our locale is also quite easy and can be done using the <kbd>setLocale</kbd> method which takes
+                in a variable of type Locale. An example of setting our locale to Spanish is shown below.</p>
+
+            <pre>context.setLocale(Locale('es', 'ES));</pre>
+
+            <p>Using our setLocale method we can create a language setting method quite easily. In the example below I
+                used a String variable to keep track of the selected language. Then I made a list of buttons of all the
+                supported locales the app has. Once one of the buttons was pressed, I set the locale to the
+                appripriate language. To get the native name and the flag of each language, I used a helper method
+                called getLanguages which is why I needed a FutureBuilder. If you're not planning on doing this then you
+                can remove the FutureBuilder from your code. An example of the code is also shown below:
+            </p>
+
+            <div class="image-figure">
+                <figure class="figure">
+                    <img src="../assets/images/blog/language_setter.gif"
+                        class="figure-img rounded mx-auto d-block img-fluid" alt="...">
+                </figure>
+            </div>
+
+            <pre>
+@override
+Widget build(BuildContext context) {
+    String _selectedLang = context.locale.languageCode;
+    return Scaffold(
+    appBar: appBarWidget('global.appbar.language'.tr(), context),
+    body: SafeArea(
+        child: FutureBuilder<List<Language>>(
+        future: Language.getLanguages(context.supportedLocales),
+        builder: (BuildContext context, AsyncSnapshot res) {
+            if (res == null || !res.hasData) {
+            return Container();
+            } else {
+            return ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: res.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                Language lang = res.data[index];
+                return Card(
+                    color: lang.languageCode == _selectedLang
+                        ? Theme.of(context).focusColor
+                        : Theme.of(context).cardColor,
+                    child: InkWell(
+                    onTap: () {
+                        context.setLocale(
+                            Locale(lang.languageCode, lang.countryCode));
+                    },
+                    child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                            Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                                Text(
+                                lang.nativeName,
+                                style: CustomTextStyle.nativeLanguageName(
+                                    context),
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 3.0)),
+                                Text(
+                                lang.languageName,
+                                style: CustomTextStyle.languageName(context),
+                                ),
+                            ],
+                            ),
+                            RichText(
+                            text: TextSpan(
+                                children: [
+                                TextSpan(
+                                    text: lang.emojiFlag,
+                                ),
+                                ],
+                                style: TextStyle(fontSize: 25),
+                            ),
+                            ),
+                        ],
+                        ),
+                    ),
+                    ),
+                );
+                },
+            );
+            }
+        },
+        ),
+    ),
+    );
+}
+            </pre>
+
+            <h3>Next Up</h3>
+
+            <p>Congratulations! You should now be able to switch between languages in your app. Be sure to check out the
+                package's <a href="https://pub.dev/packages/easy_localization">documentation</a> as it has a lot more
+                details about the package. In part 2 I will go over how to set up Crowdin so stay tuned for that.</p>
+
+            <a href="../blog.html">
+                <button class="btn square-button"><i class="fas fa-long-arrow-alt-left "></i></button>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
